@@ -1,9 +1,14 @@
 import scrapy
 from scrapy.crawler import CrawlerProcess
-import json
 import sys
-
+import pymongo
+import credentials
+dbUri = credentials.db['uri']
+client = pymongo.MongoClient(dbUri)
+db = client.geizhalsdb
+items = db.items
 index = sys.argv[1]
+hours = sys.argv[2]
 
 categories = {
     '1': 'Hardware',
@@ -22,14 +27,15 @@ categories = {
     '14': 'Büro&Schule'
 }
 
-# Usage: "python3 GetDeals.py [1-14]" where 1-14 is the category without the braces
+# Usage: "python3 GetDeals.py [1-14] [2/12/24]" where 1-14 is the category without the braces and 2/12/24 the time frame in hours
 
 
 class Spider(scrapy.Spider):
 
     name = "Deal_Spider"
     start_urls = [
-        'https://geizhals.de/?bpnew=2&thres=20&kats=' + str(index)
+        'https://geizhals.de/?bpnew=' +
+        str(hours) + '&thres=20&kats=' + str(index)
     ]
     def parse(self, response):
 
@@ -44,14 +50,28 @@ class Spider(scrapy.Spider):
             'seller': response.xpath('//b/following-sibling::*[@class="gh_price"]/following-sibling::text()[starts-with(., ")")]').extract(),
             'data_from': response.css('.gh_stat_nav time ::text').extract(),
         }
-        category = categories[str(index)]
-        file_object = open(category + '.json', 'w')
-        # Remove unnecessary bracket at the beginning
         sellerIndex = 0
         for value in output['seller']:
             output['seller'][sellerIndex] = value[6:]
             sellerIndex = sellerIndex + 1
-        json.dump(output, file_object)
+
+        results = []
+        for i in range(1, len(output['date'])):
+            # generate "unique" id to avoid inserting the same deal multiple times
+            # _id must be unique in mongo
+            obj = {
+                '_id': str(output['date'][i-1]) + str(output['name'][i-1]) + str(output['seller'][i-1]),
+                'category': str(index),
+                'date': output['date'][i-1],
+                'percent': output['percent'][i-1],
+                'name': output['name'][i-1],
+                'link': output['link'][i-1],
+                'price_new': output['price_new'][i-1],
+                'price_old': output['price_old'][i-1],
+                'seller': output['seller'][i-1],
+            }
+            results.append(obj)
+        items.insert_many(results).inserted_ids
 
 
 process = CrawlerProcess()
