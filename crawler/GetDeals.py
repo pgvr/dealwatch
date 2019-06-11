@@ -2,11 +2,15 @@ import scrapy
 from scrapy.crawler import CrawlerProcess
 import sys
 import pymongo
+from pymongo import ReplaceOne
 import credentials
+import datetime
+
 dbUri = credentials.db['uri']
 client = pymongo.MongoClient(dbUri)
-db = client.geizhalsdb
-items = db.items
+geizhalsdb = client.geizhalsdb
+items = geizhalsdb.items
+items.ensure_index('createdAt', expireAfterSeconds=60*60*24)
 index = sys.argv[1]
 hours = sys.argv[2]
 
@@ -55,12 +59,14 @@ class Spider(scrapy.Spider):
             output['seller'][sellerIndex] = value[6:]
             sellerIndex = sellerIndex + 1
 
-        results = []
+        bulk_ops = []
         for i in range(1, len(output['date'])):
             # generate "unique" id to avoid inserting the same deal multiple times
             # _id must be unique in mongo
+            # createdAt is also an index with a TTL of 24 hours from the utc_timestamp
+            utc_timestamp = datetime.datetime.utcnow()
             obj = {
-                '_id': str(output['date'][i-1]) + str(output['name'][i-1]) + str(output['seller'][i-1]),
+                '_id': str(output['link'][i-1]),
                 'category': str(index),
                 'date': output['date'][i-1],
                 'percent': output['percent'][i-1],
@@ -69,9 +75,11 @@ class Spider(scrapy.Spider):
                 'price_new': output['price_new'][i-1],
                 'price_old': output['price_old'][i-1],
                 'seller': output['seller'][i-1],
+                'createdAt': utc_timestamp
             }
-            results.append(obj)
-        items.insert_many(results).inserted_ids
+            request = ReplaceOne({'_id': obj['_id']}, obj, upsert=True)
+            bulk_ops.append(request)
+        items.bulk_write(bulk_ops)
 
 
 process = CrawlerProcess()
