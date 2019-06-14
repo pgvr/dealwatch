@@ -9,7 +9,7 @@ CATEGORY_COUNT=14
 # Configure Sleep Time between Categories
 SLEEP_TIME=2
 
-for ((i = 0; i<$CATEGORY_COUNT; i++)) 
+for ((i = 1; i<$CATEGORY_COUNT+1; i++)) 
 do
     python3 GetDeals.py $i $TIMEFRAME
     sleep $SLEEP_TIME
