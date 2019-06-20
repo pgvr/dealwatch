@@ -12,6 +12,7 @@ client = pymongo.MongoClient(dbUri)
 geizhalsdb = client.geizhalsdb
 items = geizhalsdb.items
 items.ensure_index("createdAt", expireAfterSeconds=60 * 60 * 24)
+items.create_index([("name", pymongo.TEXT)])
 index = sys.argv[1]
 hours = sys.argv[2]
 
@@ -76,15 +77,17 @@ class Spider(scrapy.Spider):
             # _id must be unique in mongo
             # createdAt is also an index with a TTL of 24 hours from the utc_timestamp
             utc_timestamp = datetime.datetime.utcnow()
+            itemDateString = output["date"][i - 1]
+            dateobj = datetime.datetime.strptime(itemDateString, "%d.%m.%Y, %H:%M")
             obj = {
                 "_id": str(output["link"][i - 1]),
-                "category": str(index),
-                "date": output["date"][i - 1],
-                "percent": output["percent"][i - 1],
+                "category": int(index),
+                "date": dateobj,
+                "percent": float(output["percent"][i - 1].replace(",", ".")),
                 "name": output["name"][i - 1],
                 "link": output["link"][i - 1],
-                "price_new": output["price_new"][i - 1],
-                "price_old": output["price_old"][i - 1],
+                "priceNew": float(output["price_new"][i - 1].replace(",", ".")),
+                "priceOld": float(output["price_old"][i - 1].replace(",", ".")),
                 "seller": output["seller"][i - 1],
                 "createdAt": utc_timestamp,
             }
