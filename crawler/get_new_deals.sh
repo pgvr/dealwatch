@@ -6,12 +6,14 @@ START_TIME=`date +%s`
 TIMEFRAME=2
 # Configure Count of Categories
 CATEGORY_COUNT=14
-# Configure Sleep Time between Categories
-SLEEP_TIME=2
+# Random Range for sleep timer
+SLEEP_MIN=10
+SLEEP_MAX=20
 
 for ((i = 1; i<$CATEGORY_COUNT+1; i++)) 
 do
     python3 GetDeals.py $i $TIMEFRAME
+    SLEEP_TIME=$(awk -v min=$SLEEP_MIN -v max=$SLEEP_MAX 'BEGIN{srand(); print int(min+rand()*(max-min+1))}')
     sleep $SLEEP_TIME
 done
 
