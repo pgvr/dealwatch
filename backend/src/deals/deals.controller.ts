@@ -11,10 +11,15 @@ export class DealsController {
         @Query("start") start = 0,
         @Query("limit") limit = 1,
         @Query("category") category: string,
+        @Query("query") query: string,
     ): Promise<Deal[]> {
         if (!category) {
             throw new HttpException("Category must be defined", 500);
         }
-        return this.dealService.findAll(category, Number(start), Number(limit));
+        if (query) {
+            return this.dealService.searchItems(category, Number(start), Number(limit), query);
+        } else {
+            return this.dealService.findAll(category, Number(start), Number(limit));
+        }
     }
 }

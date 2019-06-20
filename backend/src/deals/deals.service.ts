@@ -15,4 +15,13 @@ export class DealsService {
             .exec();
         return deals;
     }
+
+    async searchItems(category: string, start: number, limit: number, query: string): Promise<Deal[]> {
+        const deals = await this.dealModel
+            .find({ $text: { $search: query }, category })
+            .skip(start)
+            .limit(limit)
+            .exec();
+        return deals;
+    }
 }
