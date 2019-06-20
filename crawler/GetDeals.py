@@ -39,6 +39,7 @@ categories = {
 class Spider(scrapy.Spider):
 
     name = "Deal_Spider"
+    custom_settings = {"AUTOTHROTTLE_ENABLED": "true"}
     start_urls = [
         "https://geizhals.de/?bpnew=" + str(hours) + "&thres=20&kats=" + str(index)
     ]
