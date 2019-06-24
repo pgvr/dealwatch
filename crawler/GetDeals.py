@@ -46,12 +46,12 @@ class Spider(scrapy.Spider):
     def parse(self, response):
 
         output = {
-            "date": response.css("time ::text").extract(),
+            "date": response.css("#gh_content_wrapper time ::text").extract(),
             "percent": response.css(".pr_dn ::text").extract(),
             # Adjecent sibling selector
             "name": response.css(".pr_dn + a ::text").extract(),
             "link": response.css(".pr_dn + a ::attr(href)").extract(),
-            "price_new": response.css("time + b + a + b ::text").extract(),
+            "price_new": response.css("b .gh_price ::text").extract(),
             "price_old": response.css("b + .gh_price ::text").extract(),
             "seller": response.xpath(
                 '//b/following-sibling::*[@class="gh_price"]/following-sibling::text()[starts-with(., ")")]'
