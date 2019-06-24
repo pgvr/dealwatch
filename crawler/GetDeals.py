@@ -66,10 +66,8 @@ class Spider(scrapy.Spider):
         output["seller"][:] = (value[6:] for value in output["seller"])
 
         # Add domain to product links
-        i = 0
-        for value in output["link"]:
-            output["link"][i] = "www.geizhals.de/" + value
-            i += 1
+        for i in range(0, len(output["link"])):
+            output["link"][i] = "https://www.geizhals.de/" + output["link"][i]
 
         bulk_ops = []
         for i in range(1, len(output["date"])):
