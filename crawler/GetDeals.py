@@ -10,14 +10,6 @@ import logging
 import credentials
 import datetime
 
-dbUri = credentials.db["uri"]
-client = pymongo.MongoClient(dbUri)
-geizhalsdb = client.geizhalsdb
-items = geizhalsdb.items
-items.create_index("createdAt", expireAfterSeconds=60 * 60 * 24)
-items.create_index([("name", pymongo.TEXT)])
-
-
 category = sys.argv[1]
 hours = sys.argv[2]
 
