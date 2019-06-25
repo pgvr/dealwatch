@@ -44,19 +44,27 @@ class Spider(scrapy.Spider):
     ]
 
     def parse(self, response):
-
         output = {
-            "date": response.css("#gh_content_wrapper time ::text").extract(),
-            "percent": response.css(".pr_dn ::text").extract(),
-            # Adjecent sibling selector
-            "name": response.css(".pr_dn + a ::text").extract(),
-            "link": response.css(".pr_dn + a ::attr(href)").extract(),
-            "price_new": response.css("b .gh_price ::text").extract(),
-            "price_old": response.css("b + .gh_price ::text").extract(),
-            "seller": response.xpath(
-                '//b/following-sibling::*[@class="gh_price"]/following-sibling::text()[starts-with(., ")")]'
-            ).extract(),
-            "data_from": response.css(".gh_stat_nav time ::text").extract(),
+            "date": response.xpath(
+                '//*[@id = "gh_content_wrapper"]/p/time/text()'
+            ).getall(),
+            "percent": response.xpath(
+                '//*[@id="gh_content_wrapper"]/p/b/text()'
+            ).getall(),
+            "name": response.xpath("//p//a/text()").getall(),
+            "link": response.xpath("//p//a/@href").getall(),
+            "price_new": response.xpath(
+                '//*[@id="gh_content_wrapper"]/p/b/span/text()'
+            ).getall(),
+            "price_old": response.xpath(
+                '//*[@id="gh_content_wrapper"]/p/span/text()'
+            ).getall(),
+            "seller": response.xpath('//*[@id="gh_content_wrapper"]/p/text()').getall()[
+                4::6
+            ],
+            "data_from": response.xpath(
+                '//*[contains(concat( " ", @class, " " ), concat( " ", "prews", " " ))]/text()'
+            ).getall(),
         }
 
         # Remove unnecessary characters
