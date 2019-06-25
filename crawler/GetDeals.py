@@ -1,6 +1,6 @@
 import scrapy
 from scrapy.crawler import CrawlerProcess
-from scrapy.loader.processors import Join, MapCompose, TakeFirst, Identity
+from scrapy.loader.processors import MapCompose, TakeFirst, Identity
 import sys
 import pymongo
 from pymongo import ReplaceOne
@@ -54,15 +54,15 @@ class DealItemLoader(scrapy.loader.ItemLoader):
     default_input_processor = MapCompose(str.strip)
     default_output_processor = TakeFirst()
 
-    data_from_in = Identity()
     percent_in = MapCompose(lambda v: v[:-1])
     price_new_in = MapCompose(lambda v: v[2:])
     price_old_in = MapCompose(lambda v: v[2:])
     seller_in = MapCompose(lambda v: v[6:])
     link_in = MapCompose(lambda v: "https://www.geizhals.de/" + v)
+    data_from_in = Identity()
 
 
-class JsonWriterPipeline(object):
+class JsonPipeline(object):
     def __init__(self):
         self.file = open("items.json", "w")
 
@@ -70,6 +70,11 @@ class JsonWriterPipeline(object):
         line = json.dumps(dict(item)) + "\n"
         self.file.write(line)
         return item
+
+
+# TODO: Write MongoPipeline
+class MongoPipeline(object):
+    pass
 
 
 class Spider(scrapy.Spider):
@@ -115,17 +120,7 @@ class Spider(scrapy.Spider):
             loader.add_value("data_from", output["data_from"][0])
             yield loader.load_item()
 
-        # # Remove unnecessary characters
-        # output["percent"][:] = (value[:-1] for value in output["percent"])
-        # output["price_new"][:] = (value[2:] for value in output["price_new"])
-        # output["price_old"][:] = (value[2:] for value in output["price_old"])
-        # output["seller"][:] = (value[6:] for value in output["seller"])
-
-        # # Add domain to product links
-        # for i in range(0, len(output["link"])):
-        #     output["link"][i] = "https://www.geizhals.de/" + output["link"][i]
-
-        bulk_ops = []
+        # bulk_ops = []
         # for i in range(1, len(output["date"])):
         #     # generate "unique" id to avoid inserting the same deal multiple times
         #     # _id must be unique in mongo
@@ -150,19 +145,14 @@ class Spider(scrapy.Spider):
         # items.bulk_write(bulk_ops)
 
 
-# process = CrawlerProcess({"ITEM_PIPELINES", {"__main__.JsonWriterPipeline": 100}})
-
 settings = scrapy.settings.Settings(
-    {
-        # piplines start with the project/module name so replace with __main__
-        "ITEM_PIPELINES": {"__main__.JsonWriterPipeline": 100}
-    }
+    {"ITEM_PIPELINES": {"__main__.JsonPipeline": 100}, "LOG_LEVEL": "CRITICAL"}
 )
+
 process = CrawlerProcess(settings)
-
 process.crawl(Spider)
-
 a = time.time()
 process.start()
 b = time.time()
-print("!!!!!! ", b - a)
+print("!!!", b - a)
+
