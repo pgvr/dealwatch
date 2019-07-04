@@ -1,10 +1,26 @@
 .card {
-  width: 200px;
-  max-width: 300px;
+    width: 200px;
+    max-width: 300px;
 }
 
 .price-info {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.old-price {
+    text-decoration: line-through;
+    font-size: 12px;
+}
+
+.percentage-off {
+    font-size: 18px;
+    color: red;
+}
+
+.new-price {
+    font-size: 18px;
+    color: red;
+    font-weight: bold;
 }
