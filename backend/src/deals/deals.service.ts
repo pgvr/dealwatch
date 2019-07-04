@@ -16,7 +16,7 @@ export class DealsService {
      * @param sortDirection
      */
     async findAll(
-        category: string,
+        category: number,
         start: number,
         limit: number,
         sortField: SortField,
@@ -41,7 +41,7 @@ export class DealsService {
      * @param sortDirection
      */
     async searchItems(
-        category: string,
+        category: number,
         start: number,
         limit: number,
         query: string,

@@ -21,7 +21,7 @@ export class DealsController {
         }
         if (query) {
             return this.dealService.searchItems(
-                category,
+                Number(category),
                 Number(start),
                 Number(limit),
                 query,
@@ -29,7 +29,7 @@ export class DealsController {
                 sortDirection,
             );
         } else {
-            return this.dealService.findAll(category, Number(start), Number(limit), sortField, sortDirection);
+            return this.dealService.findAll(Number(category), Number(start), Number(limit), sortField, sortDirection);
         }
     }
 }
