@@ -1,14 +1,12 @@
 <div class="card">
     <!-- <img class="card-img-top" src="https://via.placeholder.com/100" alt="Card image cap" /> -->
     <div class="card-body">
-        <h5 class="card-title">Deal title</h5>
-        <p class="card-text">
-            Deal Info, Verkäufer etc.
-        </p>
+        <h5 class="card-title">{{ deal.name }}</h5>
+        <p class="card-text">{{ deal.seller }}</p>
         <div class="price-info">
-            <div class="old-price">100€</div>
-            <div class="percentage-off">-50%</div>
-            <div class="new-price">50€</div>
+            <div class="old-price">{{ deal.priceOld }}€</div>
+            <div class="percentage-off">{{ deal.percent }}</div>
+            <div class="new-price">{{ deal.priceNew }}€</div>
         </div>
     </div>
 </div>
