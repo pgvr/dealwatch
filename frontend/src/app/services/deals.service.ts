@@ -7,6 +7,7 @@ import { Deal } from "../interfaces/deal";
     providedIn: "root",
 })
 export class DealsService {
+    deals: Deal[];
     constructor(private http: HttpClient) {
         console.log(environment.apiUrl);
     }
@@ -21,6 +22,7 @@ export class DealsService {
         const response = await this.http
             .get<Deal[]>(this.buildApiUrl(category, start, limit, sortField, sortDirection))
             .toPromise();
+        this.deals = response;
         return response;
     }
 
@@ -35,6 +37,7 @@ export class DealsService {
         const response = await this.http
             .get<Deal[]>(this.buildApiUrl(category, start, limit, sortField, sortDirection, query))
             .toPromise();
+        this.deals = response;
         return response;
     }
 

@@ -1,1 +1,4 @@
-<p>deals works!</p>
+<app-header></app-header>
+<div class="container">
+    <app-deal-card *ngFor="let deal of dealsService.deals"></app-deal-card>
+</div>
