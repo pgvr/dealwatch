@@ -7,7 +7,7 @@ import { Deal } from "../interfaces/deal";
     providedIn: "root",
 })
 export class DealsService {
-    deals: Deal[];
+    deals: Deal[] = [];
     constructor(private http: HttpClient) {
         console.log(environment.apiUrl);
     }
