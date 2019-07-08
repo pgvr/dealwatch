@@ -21,3 +21,11 @@ To test and modify the backend go into the backend directory, install the packag
 `npm run start:dev`
 
 After that the application is running on localhost:3000 by default.
+
+## Frontend
+
+`cd frontend`
+
+`npm i`
+
+`ng serve -o`
