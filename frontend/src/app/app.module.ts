@@ -10,9 +10,10 @@ import { AppComponent } from "./app.component";
 import { HeaderComponent } from "./components/header/header.component";
 import { HomeComponent } from "./pages/home/home.component";
 import { DealCardComponent } from "./components/deal-card/deal-card.component";
+import { DealsComponent } from './pages/deals/deals.component';
 
 @NgModule({
-    declarations: [AppComponent, HeaderComponent, HomeComponent, DealCardComponent],
+    declarations: [AppComponent, HeaderComponent, HomeComponent, DealCardComponent, DealsComponent],
     imports: [BrowserModule, AppRoutingModule, NgbModule, HttpClientModule],
     providers: [],
     bootstrap: [AppComponent],
