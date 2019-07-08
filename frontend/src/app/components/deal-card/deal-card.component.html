@@ -4,9 +4,9 @@
         <h5 class="card-title">{{ deal.name }}</h5>
         <p class="card-text">{{ deal.seller }}</p>
         <div class="price-info">
-            <div class="old-price">{{ deal.priceOld }}€</div>
-            <div class="percentage-off">{{ deal.percent }}%</div>
-            <div class="new-price">{{ deal.priceNew }}€</div>
+            <div class="old-price">{{ deal.priceOld | number: "1.2-2" }}€</div>
+            <div class="percentage-off">{{ deal.percent | number: "1.2-2" }}%</div>
+            <div class="new-price">{{ deal.priceNew | number: "1.2-2" }}€</div>
         </div>
     </div>
 </div>
