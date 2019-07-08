@@ -1,35 +1,24 @@
 <nav class="navbar bg-dark navbar-dark navbar-expand-lg">
-  <a class="navbar-brand" routerLink="/">Dealwatch</a>
+    <a class="navbar-brand" routerLink="/">Dealwatch</a>
 
-  <button (click)="toggleCollapse()" class="navbar-toggler" type="button">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <button (click)="toggleCollapse()" class="navbar-toggler" type="button">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/">Home</a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/placeholder">Placeholder</a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/placeholder">Placeholder</a>
-      </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" routerLink="/placeholder">Placeholder</a>
-      </li>
-    </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input
-        class="form-control mr-sm-2"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-      />
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-        Search
-      </button>
-    </form>
-  </div>
+    <div [ngbCollapse]="isCollapsed" class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" routerLink="/home">Home</a>
+            </li>
+            <li class="nav-item" routerLinkActive="active">
+                <a class="nav-link" routerLink="/deals">Deals</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+                Search
+            </button>
+        </form>
+    </div>
 </nav>
