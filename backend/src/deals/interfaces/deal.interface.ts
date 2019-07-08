@@ -6,7 +6,7 @@ export interface Deal extends Document {
     readonly date: Date;
     readonly percent: number;
     readonly link: string;
-    readonly price_new: number;
-    readonly price_old: number;
+    readonly priceNew: number;
+    readonly priceOld: number;
     readonly seller: string;
 }

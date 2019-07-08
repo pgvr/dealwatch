@@ -12,8 +12,8 @@ export class DealsController {
         @Query("limit") limit = 1,
         @Query("category") category: string,
         @Query("query") query: string,
-        @Query("sort_field") sortField: SortField,
-        @Query("sort_direction") sortDirection: SortDirection,
+        @Query("sortField") sortField: SortField,
+        @Query("sortDirection") sortDirection: SortDirection,
     ): Promise<Deal[]> {
         // Category is always needed
         if (!category) {

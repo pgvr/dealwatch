@@ -72,7 +72,7 @@ export class DealsService {
             case SortField.percent:
                 return { percent: this.getSortingDirectionNumber(sortDirection) };
             case SortField.price:
-                return { price_new: this.getSortingDirectionNumber(sortDirection) };
+                return { priceNew: this.getSortingDirectionNumber(sortDirection) };
             default:
                 return {};
         }
