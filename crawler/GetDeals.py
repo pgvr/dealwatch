@@ -40,11 +40,11 @@ class DealItem(scrapy.Item):
     percent = scrapy.Field()
     name = scrapy.Field()
     link = scrapy.Field()
-    price_new = scrapy.Field()
-    price_old = scrapy.Field()
+    priceNew = scrapy.Field()
+    priceOld = scrapy.Field()
     seller = scrapy.Field()
-    data_from = scrapy.Field()
-    created_at = scrapy.Field()
+    dataFrom = scrapy.Field()
+    createdAt = scrapy.Field()
 
 
 class DealItemLoader(scrapy.loader.ItemLoader):
@@ -54,11 +54,11 @@ class DealItemLoader(scrapy.loader.ItemLoader):
     category_in = MapCompose(lambda v: int(v))
     date_in = MapCompose(lambda v: datetime.datetime.strptime(v, "%d.%m.%Y, %H:%M"))
     percent_in = MapCompose(lambda v: float(v[:-1].replace(",", ".")))
-    price_new_in = MapCompose(lambda v: float(v[2:].replace(",", ".")))
-    price_old_in = MapCompose(lambda v: float(v[2:].replace(",", ".")))
+    priceNew_in = MapCompose(lambda v: float(v[2:].replace(",", ".")))
+    priceOld_in = MapCompose(lambda v: float(v[2:].replace(",", ".")))
     seller_in = MapCompose(lambda v: v[6:])
     link_in = MapCompose(lambda v: "https://www.geizhals.de/" + v)
-    data_from_in = Identity()
+    dataFrom_in = Identity()
 
 
 class JsonPipeline(object):
@@ -120,16 +120,16 @@ class DealSpider(scrapy.Spider):
             ).getall(),
             "name": response.xpath("//p//a/text()").getall(),
             "link": response.xpath("//p//a/@href").getall(),
-            "price_new": response.xpath(
+            "priceNew": response.xpath(
                 '//*[@id="gh_content_wrapper"]/p/b/span/text()'
             ).getall(),
-            "price_old": response.xpath(
+            "priceOld": response.xpath(
                 '//*[@id="gh_content_wrapper"]/p/span/text()'
             ).getall(),
             "seller": response.xpath('//*[@id="gh_content_wrapper"]/p/text()').getall()[
                 4::6
             ],
-            "data_from": response.xpath(
+            "dataFrom": response.xpath(
                 '//*[contains(concat( " ", @class, " " ), concat( " ", "prews", " " ))]/text()'
             ).getall(),
         }
@@ -142,11 +142,11 @@ class DealSpider(scrapy.Spider):
             loader.add_value("percent", output["percent"][i])
             loader.add_value("name", output["name"][i])
             loader.add_value("link", output["link"][i])
-            loader.add_value("price_new", output["price_new"][i])
-            loader.add_value("price_old", output["price_old"][i])
+            loader.add_value("priceNew", output["priceNew"][i])
+            loader.add_value("priceOld", output["priceOld"][i])
             loader.add_value("seller", output["seller"][i])
-            # loader.add_value("data_from", output["data_from"][0])
-            loader.add_value("created_at", datetime.datetime.utcnow())
+            # loader.add_value("dataFrom", output["dataFrom"][0])
+            loader.add_value("createdAt", datetime.datetime.utcnow())
             yield loader.load_item()
 
 
