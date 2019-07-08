@@ -50,8 +50,8 @@ export class DealsService {
         query?: string,
     ) {
         return `${environment.apiUrl}/deals?category=${category}&start=${start}&limit=${limit}${
-            sortField ? `&sort_field=${sortField}` : ""
-        }${sortDirection ? `&sort_direction=${sortDirection}` : ""}${query ? `&query=${query}` : ""}`;
+            sortField ? `&sortField=${sortField}` : ""
+        }${sortDirection ? `&sortDirection=${sortDirection}` : ""}${query ? `&query=${query}` : ""}`;
     }
 }
 
