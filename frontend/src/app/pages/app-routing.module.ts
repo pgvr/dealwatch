@@ -5,12 +5,17 @@ import { DealsComponent } from "./deals/deals.component";
 
 const routes: Routes = [
     {
-        path: "",
+        path: "home",
         component: HomeComponent,
     },
     {
         path: "deals",
         component: DealsComponent,
+    },
+    {
+        path: "",
+        redirectTo: "/home",
+        pathMatch: "full",
     },
 ];
 

@@ -10,6 +10,9 @@ export class DealsComponent implements OnInit {
     constructor(public dealsService: DealsService) {}
 
     ngOnInit() {
-        this.dealsService.getDeals(1, 0, 10);
+        // Only fetch deals on init if they are empty
+        if (this.dealsService.deals.length === 0) {
+            this.dealsService.getDeals(1, 0, 100);
+        }
     }
 }
