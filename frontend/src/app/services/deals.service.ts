@@ -72,7 +72,7 @@ export class DealsService {
         category: number,
         start: number,
         limit: number,
-        minPercent: number,
+        percentMin: number,
         priceFrom: number,
         priceTo: number,
         sortField?: SortField,
@@ -80,7 +80,7 @@ export class DealsService {
         query?: string,
     ) {
         return `${environment.apiUrl}/deals?category=${category}&start=${start}&limit=${limit}${
-            minPercent ? `&minPercent=${minPercent}` : ""
+            percentMin ? `&percentMin=${percentMin}` : ""
         }${priceFrom ? `&priceFrom=${priceFrom}` : ""}${priceTo ? `&priceTo=${priceTo}` : ""}${
             sortField ? `&sortField=${sortField}` : ""
         }${sortDirection ? `&sortDirection=${sortDirection}` : ""}${query ? `&query=${query}` : ""}`;
