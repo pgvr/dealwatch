@@ -1,1 +1,12 @@
-<p>filter works!</p>
+<div class="container">
+    <!-- Dropdown Category -->
+    <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-outline-primary" id="categoryDropdown" ngbDropdownToggle>Toggle dropdown</button>
+        <div ngbDropdownMenu aria-labelledby="categoryDropdown">
+            <button ngbDropdownItem *ngFor="let category of categoriesService.categories">{{ category.name }}</button>
+        </div>
+    </div>
+    <!-- Discount over: InputPercent -->
+    <!-- Price: InputFrom to InputTo -->
+    <!-- Dropdown Sorting -->
+</div>
