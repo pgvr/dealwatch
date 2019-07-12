@@ -2,15 +2,15 @@
     <!-- Dropdown Category -->
     <div ngbDropdown class="d-inline-block">
         <button class="btn btn-outline-primary" id="categoryDropdown" ngbDropdownToggle>
-            <ng-container *ngIf="categoriesService.activeCategory; else categoryDefault">{{
-                categoriesService.activeCategory.name
+            <ng-container *ngIf="filterService.activeCategory; else categoryDefault">{{
+                filterService.activeCategory.name
             }}</ng-container>
             <ng-template #categoryDefault>Categories</ng-template>
         </button>
         <div ngbDropdownMenu aria-labelledby="categoryDropdown">
             <button
                 ngbDropdownItem
-                *ngFor="let category of categoriesService.categories"
+                *ngFor="let category of filterService.categories"
                 (click)="setActiveCategory(category)"
             >
                 {{ category.name }}
