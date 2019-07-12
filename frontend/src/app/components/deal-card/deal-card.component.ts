@@ -11,4 +11,8 @@ export class DealCardComponent implements OnInit {
     constructor() {}
 
     ngOnInit() {}
+
+    openDeal() {
+        window.open(this.deal.link, "_blank");
+    }
 }
