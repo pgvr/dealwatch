@@ -1,5 +1,6 @@
 import { Document } from "mongoose";
 
 export interface Category extends Document {
+    readonly _id: number;
     readonly name: string;
 }
