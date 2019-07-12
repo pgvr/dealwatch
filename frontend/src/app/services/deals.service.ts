@@ -7,7 +7,7 @@ import { Deal } from "../interfaces/deal";
     providedIn: "root",
 })
 export class DealsService {
-    deals: Deal[] = [];
+    deals: Deal[];
     dealsPerPage = 100;
     page = 0;
     loading = false;
