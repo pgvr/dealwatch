@@ -8,6 +8,9 @@ import { Deal } from "../interfaces/deal";
 })
 export class DealsService {
     deals: Deal[] = [];
+    dealsPerPage = 100;
+    page = 0;
+    loading = false;
     constructor(private http: HttpClient) {
         console.log(environment.apiUrl);
     }
@@ -19,10 +22,12 @@ export class DealsService {
         sortField?: SortField,
         sortDirection?: SortDirection,
     ): Promise<Deal[]> {
+        this.loading = true;
         const response = await this.http
             .get<Deal[]>(this.buildApiUrl(category, start, limit, sortField, sortDirection))
             .toPromise();
         this.deals = response;
+        this.loading = false;
         return response;
     }
 
@@ -34,10 +39,12 @@ export class DealsService {
         sortField?: SortField,
         sortDirection?: SortDirection,
     ): Promise<Deal[]> {
+        this.loading = true;
         const response = await this.http
             .get<Deal[]>(this.buildApiUrl(category, start, limit, sortField, sortDirection, query))
             .toPromise();
         this.deals = response;
+        this.loading = false;
         return response;
     }
 

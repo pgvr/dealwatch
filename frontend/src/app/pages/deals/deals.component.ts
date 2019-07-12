@@ -17,10 +17,10 @@ export class DealsComponent implements OnInit {
         }
         // Only fetch deals on init if they are empty
         if (this.dealsService.deals.length === 0) {
-            const categoryIndex =
-                this.categoriesService.categories.findIndex(cat => cat === this.categoriesService.activeCategory) + 1;
-            console.log(categoryIndex);
-            this.dealsService.getDeals(categoryIndex, 0, 100);
+            const categoryIndex = this.categoriesService.activeCategory._id;
+            const startIndex = this.dealsService.page * this.dealsService.dealsPerPage;
+            const limit = (this.dealsService.page + 1) * this.dealsService.dealsPerPage - 1;
+            this.dealsService.getDeals(categoryIndex, startIndex, limit);
         }
     }
 }
