@@ -20,7 +20,7 @@ export class DealsComponent implements OnInit {
             const categoryIndex = this.filterService.activeCategory._id;
             const startIndex = this.dealsService.page * this.dealsService.dealsPerPage;
             const limit = (this.dealsService.page + 1) * this.dealsService.dealsPerPage - 1;
-            this.dealsService.getDeals(categoryIndex, startIndex, limit);
+            this.dealsService.getDeals(categoryIndex, startIndex, limit, null, null, null);
         }
     }
 }

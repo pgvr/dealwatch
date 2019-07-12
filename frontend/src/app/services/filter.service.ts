@@ -46,16 +46,11 @@ export class FilterService {
     ];
     categories: Category[] = [];
     private _activeCategory: Category;
+    private _minPercent: number;
+    private _priceFrom: number;
+    private _priceTo: number;
 
     constructor(private http: HttpClient) {}
-
-    public get activeFilter(): Filter {
-        return this._activeFilter;
-    }
-
-    public set activeFilter(v: Filter) {
-        this._activeFilter = v;
-    }
 
     async getCategories() {
         const response = await this.http.get<Category[]>(this.buildApiUrl()).toPromise();
@@ -73,5 +68,37 @@ export class FilterService {
 
     public set activeCategory(v: Category) {
         this._activeCategory = v;
+    }
+
+    public get minPercent(): number {
+        return this._minPercent;
+    }
+
+    public set minPercent(v: number) {
+        this._minPercent = v !== 0 ? v : null;
+    }
+
+    public get priceFrom(): number {
+        return this._priceFrom;
+    }
+
+    public set priceFrom(v: number) {
+        this._priceFrom = v !== 0 ? v : null;
+    }
+
+    public get priceTo(): number {
+        return this._priceTo;
+    }
+
+    public set priceTo(v: number) {
+        this._priceTo = v !== 0 ? v : null;
+    }
+
+    public get activeFilter(): Filter {
+        return this._activeFilter;
+    }
+
+    public set activeFilter(v: Filter) {
+        this._activeFilter = v;
     }
 }

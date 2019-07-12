@@ -20,17 +20,35 @@
     <!-- Discount over: InputPercent -->
     <div class="form-group">
         <label for="discountInput">Discount over:</label>
-        <input type="number" class="form-control" id="discountInput" />
+        <input
+            (keydown.enter)="selectMinPercent($event)"
+            (blur)="selectMinPercent($event)"
+            type="number"
+            class="form-control"
+            id="discountInput"
+        />
         <span>%</span>
     </div>
     <!-- Price: InputFrom to InputTo -->
     <div class="form-group">
         <label for="priceFrom">Price:</label>
-        <input type="number" class="form-control" id="priceFrom" />
+        <input
+            (keydown.enter)="selectPriceFrom($event)"
+            (blur)="selectPriceFrom($event)"
+            type="number"
+            class="form-control"
+            id="priceFrom"
+        />
     </div>
     <div class="form-group">
         <label for="priceTo">to</label>
-        <input type="number" class="form-control" id="priceTo" />
+        <input
+            (keydown.enter)="selectPriceTo($event)"
+            (blur)="selectPriceTo($event)"
+            type="number"
+            class="form-control"
+            id="priceTo"
+        />
     </div>
     <!-- Dropdown Sorting -->
     <div ngbDropdown class="d-inline-block">

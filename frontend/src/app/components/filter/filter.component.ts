@@ -22,10 +22,7 @@ export class FilterComponent implements OnInit {
         if (category !== this.filterService.activeCategory) {
             this.filterService.activeCategory = category;
             // get new deals
-            const categoryIndex = this.filterService.activeCategory._id;
-            const startIndex = this.dealsService.page * this.dealsService.dealsPerPage;
-            const limit = (this.dealsService.page + 1) * this.dealsService.dealsPerPage - 1;
-            this.dealsService.getDeals(categoryIndex, startIndex, limit);
+            this.getDealsWithParameters();
         }
     }
 
@@ -33,12 +30,59 @@ export class FilterComponent implements OnInit {
         if (filter !== this.filterService.activeFilter) {
             this.filterService.activeFilter = filter;
             // get new deals
-            const categoryIndex = this.filterService.activeCategory._id;
-            const startIndex = this.dealsService.page * this.dealsService.dealsPerPage;
-            const limit = (this.dealsService.page + 1) * this.dealsService.dealsPerPage - 1;
+            this.getDealsWithParameters();
+        }
+    }
+
+    selectMinPercent(event) {
+        // Blur input if enter is pressed
+        if (event.key === "Enter") {
+            event.target.blur();
+        }
+        this.filterService.minPercent = Number(event.target.value);
+        this.getDealsWithParameters();
+    }
+
+    selectPriceFrom(event) {
+        // Blur input if enter is pressed
+        if (event.key === "Enter") {
+            event.target.blur();
+        }
+        this.filterService.priceFrom = Number(event.target.value);
+        this.getDealsWithParameters();
+    }
+
+    selectPriceTo(event) {
+        // Blur input if enter is pressed
+        if (event.key === "Enter") {
+            event.target.blur();
+        }
+        this.filterService.priceTo = Number(event.target.value);
+        this.getDealsWithParameters();
+    }
+
+    getDealsWithParameters() {
+        const categoryIndex = this.filterService.activeCategory._id;
+        const startIndex = this.dealsService.page * this.dealsService.dealsPerPage;
+        const limit = (this.dealsService.page + 1) * this.dealsService.dealsPerPage - 1;
+        const minPercent = this.filterService.minPercent;
+        const priceFrom = this.filterService.priceFrom;
+        const priceTo = this.filterService.priceTo;
+        if (this.filterService.activeFilter) {
             const sortField = this.filterService.activeFilter.field;
             const sortDirection = this.filterService.activeFilter.direction;
-            this.dealsService.getDeals(categoryIndex, startIndex, limit, sortField, sortDirection);
+            this.dealsService.getDeals(
+                categoryIndex,
+                startIndex,
+                limit,
+                minPercent,
+                priceFrom,
+                priceTo,
+                sortField,
+                sortDirection,
+            );
+        } else {
+            this.dealsService.getDeals(categoryIndex, startIndex, limit, minPercent, priceFrom, priceTo);
         }
     }
 }
