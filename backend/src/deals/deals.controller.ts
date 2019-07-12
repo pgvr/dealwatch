@@ -12,6 +12,9 @@ export class DealsController {
         @Query("limit") limit = 1,
         @Query("category") category: string,
         @Query("query") query: string,
+        @Query("percentMin") percentMin: number,
+        @Query("priceFrom") priceFrom: number,
+        @Query("priceTo") priceTo: number,
         @Query("sortField") sortField: SortField,
         @Query("sortDirection") sortDirection: SortDirection,
     ): Promise<Deal[]> {
@@ -25,11 +28,23 @@ export class DealsController {
                 Number(start),
                 Number(limit),
                 query,
+                Number(percentMin),
+                Number(priceFrom),
+                Number(priceTo),
                 sortField,
                 sortDirection,
             );
         } else {
-            return this.dealService.findAll(Number(category), Number(start), Number(limit), sortField, sortDirection);
+            return this.dealService.findAll(
+                Number(category),
+                Number(start),
+                Number(limit),
+                Number(percentMin),
+                Number(priceFrom),
+                Number(priceTo),
+                sortField,
+                sortDirection,
+            );
         }
     }
 }

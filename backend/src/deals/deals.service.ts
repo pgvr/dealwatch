@@ -19,11 +19,14 @@ export class DealsService {
         category: number,
         start: number,
         limit: number,
+        percentMin: number,
+        priceFrom: number,
+        priceTo: number,
         sortField: SortField,
         sortDirection: SortDirection,
     ): Promise<Deal[]> {
         const deals = await this.dealModel
-            .find({ category })
+            .find(this.getFindingObject(category, null, percentMin, priceFrom, priceTo))
             .skip(start)
             .limit(limit)
             .sort(this.getSortingObject(sortField, sortDirection))
@@ -45,11 +48,14 @@ export class DealsService {
         start: number,
         limit: number,
         query: string,
+        percentMin: number,
+        priceFrom: number,
+        priceTo: number,
         sortField: SortField,
         sortDirection: SortDirection,
     ): Promise<Deal[]> {
         const deals = await this.dealModel
-            .find({ $text: { $search: query }, category })
+            .find(this.getFindingObject(category, query, percentMin, priceFrom, priceTo))
             .skip(start)
             .limit(limit)
             .sort(this.getSortingObject(sortField, sortDirection))
@@ -76,6 +82,37 @@ export class DealsService {
             default:
                 return {};
         }
+    }
+
+    /**
+     * Constructs object for the find() function of the DB
+     * @param category
+     * @param query
+     * @param percentMin
+     * @param priceFrom
+     * @param priceTo
+     */
+    getFindingObject(category: number, query: string, percentMin: number, priceFrom: number, priceTo: number) {
+        const obj = {};
+        if (query) {
+            obj["$text"] = { $search: query };
+        } else {
+            obj["category"] = category;
+        }
+        if (percentMin) {
+            // Make sure percent number is negative
+            if (percentMin > 0) {
+                percentMin = percentMin * -1;
+            }
+            obj["percent"] = { $lte: percentMin };
+        }
+        if (priceFrom) {
+            obj["priceNew"] = { $gte: priceFrom };
+        }
+        if (priceTo) {
+            obj["priceNew"] = { ...obj["priceNew"], $lte: priceTo };
+        }
+        return obj;
     }
 
     /**
