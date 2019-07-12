@@ -16,7 +16,7 @@ export class DealsComponent implements OnInit {
             this.filterService.activeCategory = this.filterService.categories[0];
         }
         // Only fetch deals on init if they are empty
-        if (this.dealsService.deals.length === 0) {
+        if (!this.dealsService.deals) {
             const categoryIndex = this.filterService.activeCategory._id;
             const startIndex = this.dealsService.page * this.dealsService.dealsPerPage;
             const limit = (this.dealsService.page + 1) * this.dealsService.dealsPerPage - 1;

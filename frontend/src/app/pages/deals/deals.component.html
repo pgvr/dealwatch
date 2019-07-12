@@ -1,7 +1,10 @@
 <app-header></app-header>
 <app-filter></app-filter>
 <div class="container">
-    <ng-container *ngIf="dealsService.deals.length === 0 || dealsService.loading; else deals">
+    <ng-container *ngIf="dealsService.deals?.length === 0 && !dealsService.loading">
+        No deals found
+    </ng-container>
+    <ng-container *ngIf="dealsService.loading; else deals">
         Loading the freshest deals...
     </ng-container>
     <ng-template #deals
