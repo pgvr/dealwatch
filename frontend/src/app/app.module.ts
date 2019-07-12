@@ -11,9 +11,10 @@ import { HeaderComponent } from "./components/header/header.component";
 import { HomeComponent } from "./pages/home/home.component";
 import { DealCardComponent } from "./components/deal-card/deal-card.component";
 import { DealsComponent } from './pages/deals/deals.component';
+import { FilterComponent } from './components/filter/filter.component';
 
 @NgModule({
-    declarations: [AppComponent, HeaderComponent, HomeComponent, DealCardComponent, DealsComponent],
+    declarations: [AppComponent, HeaderComponent, HomeComponent, DealCardComponent, DealsComponent, FilterComponent],
     imports: [BrowserModule, AppRoutingModule, NgbModule, HttpClientModule],
     providers: [],
     bootstrap: [AppComponent],
