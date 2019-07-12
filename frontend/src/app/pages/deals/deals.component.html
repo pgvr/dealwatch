@@ -1,4 +1,5 @@
 <app-header></app-header>
+<app-filter></app-filter>
 <div class="container">
     <ng-container *ngIf="dealsService.deals.length > 0; else loading">
         <app-deal-card *ngFor="let deal of dealsService.deals" [deal]="deal"></app-deal-card>

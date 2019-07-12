@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 import { environment } from "../../environments/environment";
 import { Category } from "../interfaces/category";
 
@@ -8,6 +8,7 @@ import { Category } from "../interfaces/category";
 })
 export class CategoriesService {
     categories: Category[] = [];
+    private _activeCategory: Category;
     constructor(private http: HttpClient) {}
 
     async getCategories() {
@@ -18,5 +19,13 @@ export class CategoriesService {
 
     private buildApiUrl() {
         return `${environment.apiUrl}/categories`;
+    }
+
+    public get activeCategory(): Category {
+        return this._activeCategory;
+    }
+
+    public set activeCategory(v: Category) {
+        this._activeCategory = v;
     }
 }

@@ -1,4 +1,22 @@
 .container {
     display: flex;
-    background: gray;
+    flex-direction: row;
+    align-items: center;
+}
+
+.card {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    label {
+        margin: 0;
+    }
+    input[type="number"] {
+        width: 50px;
+    }
 }

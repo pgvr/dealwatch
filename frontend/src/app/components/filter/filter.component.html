@@ -1,12 +1,53 @@
-<div class="container">
+<div class="container card">
     <!-- Dropdown Category -->
     <div ngbDropdown class="d-inline-block">
-        <button class="btn btn-outline-primary" id="categoryDropdown" ngbDropdownToggle>Toggle dropdown</button>
+        <button class="btn btn-outline-primary" id="categoryDropdown" ngbDropdownToggle>
+            <ng-container *ngIf="categoriesService.activeCategory; else categoryDefault">{{
+                categoriesService.activeCategory.name
+            }}</ng-container>
+            <ng-template #categoryDefault>Categories</ng-template>
+        </button>
         <div ngbDropdownMenu aria-labelledby="categoryDropdown">
-            <button ngbDropdownItem *ngFor="let category of categoriesService.categories">{{ category.name }}</button>
+            <button
+                ngbDropdownItem
+                *ngFor="let category of categoriesService.categories"
+                (click)="setActiveCategory(category)"
+            >
+                {{ category.name }}
+            </button>
         </div>
     </div>
     <!-- Discount over: InputPercent -->
+    <div class="form-group">
+        <label for="discountInput">Discount over:</label>
+        <input type="number" class="form-control" id="discountInput" />
+        <span>%</span>
+    </div>
     <!-- Price: InputFrom to InputTo -->
+    <div class="form-group">
+        <label for="priceFrom">Price:</label>
+        <input type="number" class="form-control" id="priceFrom" />
+    </div>
+    <div class="form-group">
+        <label for="priceTo">to</label>
+        <input type="number" class="form-control" id="priceTo" />
+    </div>
     <!-- Dropdown Sorting -->
+    <div ngbDropdown class="d-inline-block">
+        <button class="btn btn-outline-primary" id="filterDropdown" ngbDropdownToggle>
+            <ng-container *ngIf="filterService.activeFilter; else filterDefault"
+                >{{ filterService.activeFilter.field }} - {{ filterService.activeFilter.direction }}</ng-container
+            >
+            <ng-template #filterDefault>Sorting</ng-template>
+        </button>
+        <div ngbDropdownMenu aria-labelledby="filterDropdown">
+            <button
+                ngbDropdownItem
+                *ngFor="let filter of filterService.availableFilter"
+                (click)="setActiveFilter(filter)"
+            >
+                {{ filter.field }} - {{ filter.direction }}
+            </button>
+        </div>
+    </div>
 </div>
