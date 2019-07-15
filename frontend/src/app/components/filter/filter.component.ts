@@ -38,27 +38,42 @@ export class FilterComponent implements OnInit {
         // Blur input if enter is pressed
         if (event.key === "Enter") {
             event.target.blur();
+            return;
         }
-        this.filterService.minPercent = Number(event.target.value);
-        this.getDealsWithParameters();
+        const value = Number(event.target.value);
+        // Only request if the value actually changed
+        if (value !== this.filterService.minPercent) {
+            this.filterService.minPercent = Number(event.target.value);
+            this.getDealsWithParameters();
+        }
     }
 
     selectPriceFrom(event) {
         // Blur input if enter is pressed
         if (event.key === "Enter") {
             event.target.blur();
+            return;
         }
-        this.filterService.priceFrom = Number(event.target.value);
-        this.getDealsWithParameters();
+        const value = Number(event.target.value);
+        // Only request if the value actually changed
+        if (value !== this.filterService.priceFrom) {
+            this.filterService.priceFrom = Number(event.target.value);
+            this.getDealsWithParameters();
+        }
     }
 
     selectPriceTo(event) {
         // Blur input if enter is pressed
         if (event.key === "Enter") {
             event.target.blur();
+            return;
         }
-        this.filterService.priceTo = Number(event.target.value);
-        this.getDealsWithParameters();
+        const value = Number(event.target.value);
+        // Only request if the value actually changed
+        if (value !== this.filterService.priceTo) {
+            this.filterService.priceTo = Number(event.target.value);
+            this.getDealsWithParameters();
+        }
     }
 
     getDealsWithParameters() {

@@ -2,11 +2,19 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .card {
     padding-top: 15px;
     padding-bottom: 15px;
+}
+
+.price-filter-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .form-group {

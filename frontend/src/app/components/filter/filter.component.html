@@ -30,25 +30,27 @@
         <span>%</span>
     </div>
     <!-- Price: InputFrom to InputTo -->
-    <div class="form-group">
-        <label for="priceFrom">Price:</label>
-        <input
-            (keydown.enter)="selectPriceFrom($event)"
-            (blur)="selectPriceFrom($event)"
-            type="number"
-            class="form-control"
-            id="priceFrom"
-        />
-    </div>
-    <div class="form-group">
-        <label for="priceTo">to</label>
-        <input
-            (keydown.enter)="selectPriceTo($event)"
-            (blur)="selectPriceTo($event)"
-            type="number"
-            class="form-control"
-            id="priceTo"
-        />
+    <div class="price-filter-container">
+        <div class="form-group">
+            <label for="priceFrom">Price:</label>
+            <input
+                (keydown.enter)="selectPriceFrom($event)"
+                (blur)="selectPriceFrom($event)"
+                type="number"
+                class="form-control"
+                id="priceFrom"
+            />
+        </div>
+        <div class="form-group">
+            <label for="priceTo">to</label>
+            <input
+                (keydown.enter)="selectPriceTo($event)"
+                (blur)="selectPriceTo($event)"
+                type="number"
+                class="form-control"
+                id="priceTo"
+            />
+        </div>
     </div>
     <!-- Dropdown Sorting -->
     <div ngbDropdown class="d-inline-block">
